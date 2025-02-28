@@ -2,8 +2,7 @@
     Install the Docker
 
 # To run the application run these two command
-    1. ./gradlew clean build -x test;
-    2. docker-compose up --build 
+    1. docker-compose up --build 
 
 # Functional Requirement
     1. make transaction
