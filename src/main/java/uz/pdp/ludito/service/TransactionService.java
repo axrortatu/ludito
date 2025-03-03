@@ -3,16 +3,20 @@ package uz.pdp.ludito.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uz.pdp.ludito.controller.dto.TransactionCheckRequest;
 import uz.pdp.ludito.entity.ServiceEntity;
 import uz.pdp.ludito.entity.TransactionEntity;
+import uz.pdp.ludito.entity.agent.AgentEntity;
 import uz.pdp.ludito.entity.enums.TransactionState;
 import uz.pdp.ludito.exception.RecordNotFoundException;
 import uz.pdp.ludito.factory.TransactionFactory;
+import uz.pdp.ludito.repository.AgentRepository;
 import uz.pdp.ludito.repository.ServiceRepository;
 import uz.pdp.ludito.repository.TransactionRepository;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +28,7 @@ public class TransactionService {
     private final ServiceRepository serviceRepository;
     private final AccountService accountService;
     private final TransactionFactory transactionFactory;
+    private final AgentRepository agentRepository;
 
     public TransactionEntity check(TransactionCheckRequest request) {
         Optional<ServiceEntity> optionalServiceEntity
@@ -48,6 +53,7 @@ public class TransactionService {
         return transactionRepository.save(transactionEntity);
     }
 
+
     public TransactionEntity pay(long transactionId) {
         Optional<TransactionEntity> optionalTransactionEntity
                 = transactionRepository.findById(transactionId);
@@ -60,6 +66,7 @@ public class TransactionService {
         }
 
         transactionEntity.setStatus(TransactionState.IN_PROCESS);
+        transactionEntity.setUpdatedAt(Instant.now());
         accountService.withdraw(transactionEntity); //need to enhance merchant withdraw with validation
 
         try {
@@ -73,8 +80,12 @@ public class TransactionService {
         return transactionRepository.save(transactionEntity);
     }
 
-    public List<TransactionEntity> getAllTransactions() {
-        return transactionRepository.findAll();
+    public List<TransactionEntity> getAllTransactionsPerAgent(String agent) {
+        Optional<AgentEntity> agentEntity = agentRepository.findByUsername(agent);
+        if (agentEntity.isEmpty()) {
+            throw new RecordNotFoundException(String.format("Agent %s not found", agent));
+        }
+        return transactionRepository.findAllByAgent(agent);
     }
 
     private void sendRequestToMerchant() {

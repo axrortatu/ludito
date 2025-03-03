@@ -26,6 +26,8 @@ public class TransactionConverter {
                         .getMerchantServiceEntity().getMerchant()))
                 .agent(transactionEntity.getAgent())
                 .status(transactionEntity.getStatus())
+                .createdAt(transactionEntity.getCreatedAt())
+                .updatedAt(transactionEntity.getUpdatedAt())
                 .build();
     }
 

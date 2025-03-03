@@ -5,6 +5,7 @@ import lombok.Data;
 import uz.pdp.ludito.entity.enums.TransactionState;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Data
 @Builder
@@ -20,4 +21,6 @@ public class TransactionResponse {
     private String account;
     private TransactionState status;
     private String agent;
+    private Instant createdAt;
+    private Instant updatedAt;
 }

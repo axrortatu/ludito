@@ -3,6 +3,7 @@ package uz.pdp.ludito.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.ludito.controller.converter.TransactionConverter;
 import uz.pdp.ludito.controller.dto.TransactionCheckRequest;
@@ -11,6 +12,7 @@ import uz.pdp.ludito.controller.dto.TransactionResponse;
 import uz.pdp.ludito.entity.TransactionEntity;
 import uz.pdp.ludito.service.TransactionService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -38,9 +40,13 @@ public class TransactionController {
         return TransactionConverter.fromEntity(transaction);
     }
 
+    @PreAuthorize("hasRole('AGENT')")
     @GetMapping
-    public List<TransactionResponse> getAllTransactions() {
-        List<TransactionEntity> transactions = transactionService.getAllTransactions();
+    public List<TransactionResponse> getAllTransactions(
+             Principal principal
+    ) {
+        String agentUsername = principal.getName();
+        List<TransactionEntity> transactions = transactionService.getAllTransactionsPerAgent(agentUsername);
         return TransactionConverter.fromEntity(transactions);
     }
 }

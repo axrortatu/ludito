@@ -8,6 +8,7 @@ import uz.pdp.ludito.entity.enums.TransactionState;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.Instant;
 
 @Component
 public class TransactionFactory {
@@ -15,6 +16,7 @@ public class TransactionFactory {
     public TransactionEntity createTransaction(ServiceEntity serviceEntity,
                                                String account,
                                                BigDecimal amount) {
+        Instant now = Instant.now();
         return TransactionEntity
                 .builder()
                 .status(TransactionState.CREATED)
@@ -25,7 +27,10 @@ public class TransactionFactory {
                 .amountToMerchant(calculateAmountToMerchant(
                         amount,
                         serviceEntity.getMerchantServiceEntity().getCommission()
-                )).build();
+                ))
+                .createdAt(now)
+                .updatedAt(now)
+                .build();
     }
 
     private static BigDecimal calculateAmountToMerchant(BigDecimal amount, int commission) {
