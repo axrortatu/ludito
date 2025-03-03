@@ -71,7 +71,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvc29uMTIzIiwiaWF0IjoxNzQwNDcxNTU1LCJleHAiOjE3NDA1NTc5NTUsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FHRU5UIn1dfQ.BpmHyRV_CtFvra4B6S4vWpymkDyVpxjY5c3YHZQq6F0QT-v1SLT1kUfD7474s4xE",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvc29uMTIzIiwiaWF0IjoxNzQwOTk0NDU2LCJleHAiOjE3NDEwODA4NTYsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FHRU5UIn1dfQ.Oc19P_8VaXDoYMVhHxNBFFRw2B2DOWV_bNCYJur4_BIuP9WJo7mPFcVzL7YLkZe3",
 							"type": "string"
 						}
 					]
@@ -103,14 +103,14 @@
 			"response": []
 		},
 		{
-			"name": "check transaction Copy",
+			"name": "pay transaction",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvc29uMTIzIiwiaWF0IjoxNzQwNDcxNTU1LCJleHAiOjE3NDA1NTc5NTUsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FHRU5UIn1dfQ.BpmHyRV_CtFvra4B6S4vWpymkDyVpxjY5c3YHZQq6F0QT-v1SLT1kUfD7474s4xE",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvc29uMTIzIiwiaWF0IjoxNzQwOTk0NDU2LCJleHAiOjE3NDEwODA4NTYsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FHRU5UIn1dfQ.Oc19P_8VaXDoYMVhHxNBFFRw2B2DOWV_bNCYJur4_BIuP9WJo7mPFcVzL7YLkZe3",
 							"type": "string"
 						}
 					]
@@ -119,7 +119,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"transactionId\": 4\n}",
+					"raw": "{\n    \"transactionId\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -136,6 +136,35 @@
 						"v1",
 						"transaction",
 						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get transactions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvc29uMTIzIiwiaWF0IjoxNzQwOTk0NDU2LCJleHAiOjE3NDEwODA4NTYsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FHRU5UIn1dfQ.Oc19P_8VaXDoYMVhHxNBFFRw2B2DOWV_bNCYJur4_BIuP9WJo7mPFcVzL7YLkZe3",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/transaction",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transaction"
 					]
 				}
 			},
